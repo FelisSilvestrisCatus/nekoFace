@@ -10,9 +10,14 @@ import java.util.Map;
 @RequestMapping("/")
 public class api {
 
+    @RequestMapping(value = "/")
+    public String index(String temppath, String uid, String type) {
+        return "helloworld";
+    }
+
 
     @RequestMapping(value = "/facedetection")
-    public Map<String, String> index(String temppath, String uid, String type) {
+    public Map<String, String> facedetection(String temppath, String uid, String type) {
         System.out.println("temppath = " + temppath);
         System.out.println("uid = " + uid);
         System.out.println("type = " + type);

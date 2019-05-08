@@ -8,9 +8,11 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
-import sun.misc.BASE64Decoder;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -69,7 +71,6 @@ public class Face {
         rect_cut.height = rect.height;
         String dirpath = null;
         if (type.equalsIgnoreCase("0")) {
-
             dirpath = "C:\\vfiles\\photo\\" + uid;
         } else {
             dirpath = "C:\\vfiles\\photo_login\\" + uid;
