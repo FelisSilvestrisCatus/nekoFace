@@ -4,6 +4,8 @@ package nekoFace;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -28,5 +30,13 @@ public class api {
         return FaceTrainAndValidate.validate(uid, temppath);
     }
 
+    //接受指令开始 训练
+    @RequestMapping(value = "/startTrain")
+    public Map<String, String> startTrain() throws IOException {
+        Map<String, String> map = new HashMap<>();
 
+        FaceTrainAndValidate.train();
+        map.put("train","yes");
+        return map;
+    }
 }
