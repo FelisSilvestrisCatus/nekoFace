@@ -1,4 +1,4 @@
-package com.example.demo;
+package nekoFace;
 
 
 import org.opencv.core.*;
