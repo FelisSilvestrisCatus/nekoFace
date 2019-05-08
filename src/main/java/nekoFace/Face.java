@@ -1,7 +1,10 @@
 package nekoFace;
 
 
-import org.opencv.core.*;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Rect;
+import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
@@ -108,8 +111,8 @@ public class Face {
         org.opencv.core.Rect rect = faceDetections.toArray()[0];
 //            // 用绿色框匡助
 
-        Imgproc.rectangle(image, new Point(rect.x, rect.y),
-                new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
+//        Imgproc.rectangle(image, new Point(rect.x, rect.y),
+//                new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
         rect_cut.x = rect.x;
         rect_cut.y = rect.y;
         rect_cut.width = rect.width;

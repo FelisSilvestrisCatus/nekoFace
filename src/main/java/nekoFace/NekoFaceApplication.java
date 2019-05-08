@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.text.ParseException;
 
 @SpringBootApplication
-public class DemoApplication {
+public class NekoFaceApplication {
 
     public static void main(String[] args) throws IOException, ParseException {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(NekoFaceApplication.class, args);
     }
 }
