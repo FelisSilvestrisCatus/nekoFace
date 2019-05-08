@@ -19,5 +19,14 @@ public class api {
         return Face.facedetection(temppath, uid, type);
     }
 
+    //temppath 是用户base64转换后的地址
+    @RequestMapping(value = "/faceRecognition")
+    public Map<String, String> faceRecognition(String temppath, String uid) {
+        System.out.println("temppath = " + temppath);
+        System.out.println("uid = " + uid);
+
+        return FaceTrainAndValidate.validate(uid, temppath);
+    }
+
 
 }
