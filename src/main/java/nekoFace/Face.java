@@ -73,7 +73,7 @@ public class Face {
         if (type.equalsIgnoreCase("0")) {
             dirpath = "C:\\vfiles\\photo\\" + uid;
         } else {
-            dirpath = "C:\\vfiles\\photo_login\\" + uid;
+            dirpath = "C:\\vfiles\\photo_temp\\" + uid;
         }
 
 
@@ -116,7 +116,7 @@ public class Face {
                 File img_file = array_[a];
                 String path_img = img_file.getPath();
                 String imgname = img_file.getName();
-                String listitem = path_img + imgname + ";" + uname;
+                String listitem = path_img  + ";" + uname;
                 System.out.println("要写入的数据" + listitem);
                 list.add(listitem);
 
