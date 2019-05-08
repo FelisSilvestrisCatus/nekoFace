@@ -23,7 +23,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <!-- java集成opencv-->
         <dependency>
             <groupId>org.bytedeco</groupId>
