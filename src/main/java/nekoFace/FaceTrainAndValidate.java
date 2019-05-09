@@ -1,32 +1,24 @@
 package nekoFace;//package neko.utils.face;
 
 
+import org.bytedeco.javacpp.DoublePointer;
+import org.bytedeco.javacpp.IntPointer;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_face.FaceRecognizer;
+import org.bytedeco.opencv.opencv_face.FisherFaceRecognizer;
+import org.opencv.imgcodecs.Imgcodecs;
+
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.bytedeco.javacpp.BytePointer;
-import org.bytedeco.javacpp.IntPointer;
-import org.bytedeco.librealsense.intrinsics;
-import org.bytedeco.javacpp.DoublePointer;
-
-import org.bytedeco.opencv.opencv_core.*;
-import org.bytedeco.opencv.opencv_face.*;
-import org.bytedeco.opencv.opencv_ml.DTrees.Split;
-
-import org.opencv.imgcodecs.Imgcodecs;
-
-import static org.bytedeco.opencv.global.opencv_core.*;
-import static org.bytedeco.opencv.global.opencv_face.*;
-import static org.bytedeco.opencv.global.opencv_imgcodecs.*;
+import static org.bytedeco.opencv.global.opencv_core.CV_32SC1;
+import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
 
 public class FaceTrainAndValidate {
 
@@ -94,41 +86,44 @@ public class FaceTrainAndValidate {
     //学生用来登录或者点名时所需（）
 
     /**
-     *
      * @param uid
-     * @param loginimgpath  base64 转换后的地址
+     * @param loginimgpath base64 转换后的地址
      * @return
      */
     public static Map<String, String> validate(String uid, String loginimgpath) {
 
 
+        try {
+            boolean flag = false;
+            //识别人脸并裁剪
+            Map<String, String> map = new HashMap<>();
+            map = Face.facedetection(loginimgpath, uid, "1");// 1 表示该该方法用来登录存放临时的图片
+            if (!(map.get("flag").equalsIgnoreCase("1"))) {
+                map.put("isThisGuy", "no");//也同时拒绝他的登录  或者这个哔是冒名顶替的
+                return map;// 不具备人脸识别的条件
+            }
+            //开始人脸识别
+            //加载模型
+            FaceRecognizer faceRecognizer = FisherFaceRecognizer.create();
 
-        boolean flag = false;
-
-        //识别人脸并裁剪
-        Map<String, String> map = new HashMap<>();
-        map = Face.facedetection(loginimgpath, uid, "1");// 1 表示该该方法用来登录存放临时的图片
-        if (!(map.get("flag").equalsIgnoreCase("1"))) {
-            map.put("isThisGuy", "no");//也同时拒绝他的登录  或者这个哔是冒名顶替的
-            return map;// 不具备人脸识别的条件
-        }
-        //开始人脸识别
-        //加载模型
-        FaceRecognizer faceRecognizer = FisherFaceRecognizer.create();
-
-        IntPointer label = new IntPointer(1);
-        DoublePointer confidence = new DoublePointer(1);
-        faceRecognizer.setThreshold(99.22);//设置阈值
-        faceRecognizer.read("C:\\vfiles\\Model.xml");
-        //图像灰度化
-        Mat Image = imread(map.get("path"), Imgcodecs.IMREAD_GRAYSCALE);
-        faceRecognizer.predict(Image, label, confidence);
-        int predictedLabel = label.get(0);
-        if (predictedLabel == Integer.valueOf(uid)) {
-            map.put("isThisGuy", "yes"); //是他就是他
+            IntPointer label = new IntPointer(1);
+            DoublePointer confidence = new DoublePointer(1);
+            faceRecognizer.setThreshold(99.22);//设置阈值
+            faceRecognizer.read("C:\\vfiles\\Model.xml");
+            //图像灰度化
+            Mat Image = imread(map.get("path"), Imgcodecs.IMREAD_GRAYSCALE);
+            faceRecognizer.predict(Image, label, confidence);
+            int predictedLabel = label.get(0);
+            if (predictedLabel == Integer.valueOf(uid)) {
+                map.put("isThisGuy", "yes");
+                return map;
+            }
+            map.put("isThisGuy", "no");
+            return map;
+        } catch (Exception e) {
+            Map<String, String> map = new HashMap<>();
+            map.put("isThisGuy", "no");
             return map;
         }
-        map.put("isThisGuy", "no");//也同时拒绝他的登录  或者这个哔是冒名顶替的
-        return map;
     }
 }
