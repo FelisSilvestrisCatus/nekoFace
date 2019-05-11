@@ -1,10 +1,7 @@
 package nekoFace;
 
 
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Rect;
-import org.opencv.core.Size;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
@@ -86,8 +83,11 @@ public class Face {
         rect_cut = new Rect(rect_cut.x, rect_cut.y, rect_cut.width, rect_cut.height);
         //dst裁剪后的
         Mat dst = new Mat(image, rect_cut);
-        Mat afterreasize = new Mat();
-        Imgproc.resize(dst, afterreasize, new Size(92, 112), 0, 0, Imgproc.INTER_LINEAR);
+        Mat afterGass = new Mat();
+        Imgproc.GaussianBlur(dst, afterGass, new Size(92,112), 0, 0, Core.BORDER_DEFAULT);
+        Mat afterreasize=new Mat();
+        Imgproc.resize(afterGass, afterreasize, new Size(92, 112), 0, 0, Imgproc.INTER_LINEAR);
+
         System.out.println("像素" + dst.height() + "dd" + dst.width());
         Imgcodecs.imwrite(filename, afterreasize);
         map.put("flag", "" + flag);
