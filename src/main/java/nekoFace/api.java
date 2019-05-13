@@ -39,7 +39,6 @@ public class api {
     @RequestMapping(value = "/startTrain")
     public Map<String, String> startTrain() throws IOException {
         Map<String, String> map = new HashMap<>();
-
         FaceTrainAndValidate.train();
         map.put("train","yes");
         return map;
