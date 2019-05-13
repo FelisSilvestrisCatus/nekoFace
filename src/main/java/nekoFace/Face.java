@@ -29,7 +29,6 @@ public class Face {
 //    }
 
 
-
     //检测人脸  //若检测到 进行裁剪 并返回值
 
     /**
@@ -116,7 +115,7 @@ public class Face {
                 File img_file = array_[a];
                 String path_img = img_file.getPath();
                 String imgname = img_file.getName();
-                String listitem = path_img  + ";" + uname;
+                String listitem = path_img + ";" + uname;
                 System.out.println("要写入的数据" + listitem);
                 list.add(listitem);
 
