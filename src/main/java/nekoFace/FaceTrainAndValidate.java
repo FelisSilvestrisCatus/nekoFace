@@ -108,7 +108,7 @@ public class FaceTrainAndValidate {
 
             IntPointer label = new IntPointer(1);
             DoublePointer confidence = new DoublePointer(1);
-            faceRecognizer.setThreshold(10.00);//设置阈值
+            faceRecognizer.setThreshold(97.00);//设置阈值
             faceRecognizer.read("C:\\vfiles\\Model.xml");
             //图像灰度化
             //先去噪声 再灰度化
