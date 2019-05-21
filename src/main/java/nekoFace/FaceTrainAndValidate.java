@@ -7,11 +7,7 @@ import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.MatVector;
 import org.bytedeco.opencv.opencv_face.FaceRecognizer;
 import org.bytedeco.opencv.opencv_face.FisherFaceRecognizer;
-import org.opencv.core.Core;
-import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
-
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -112,7 +108,7 @@ public class FaceTrainAndValidate {
 
             IntPointer label = new IntPointer(1);
             DoublePointer confidence = new DoublePointer(1);
-            faceRecognizer.setThreshold(99.88);//设置阈值
+            faceRecognizer.setThreshold(10.00);//设置阈值
             faceRecognizer.read("C:\\vfiles\\Model.xml");
             //图像灰度化
             //先去噪声 再灰度化
